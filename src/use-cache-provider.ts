@@ -6,20 +6,25 @@ import createCacheProvider from './cache-provider'
 /**
  * Cache provider hook
  */
-export default function useCacheProvider<Data = any, Error = any>(config: TConfig): TCacheProvider | undefined {
+export default function useCacheProvider<Data = any, Error = any>({
+  dbName,
+  storeName,
+  storageHandler,
+  version,
+}: TConfig): TCacheProvider | undefined {
   const [ cacheProvider, setCacheProvider ] = useState<TCacheProvider>()
 
   useEffect(() => {
     // False on mount or on dependency change
     let isSetup = true
 
-    createCacheProvider<Data, Error>(config)
+    createCacheProvider<Data, Error>({ dbName, storeName, storageHandler, version })
       .then(cp =>
         isSetup && setCacheProvider(() => cp)
       )
 
     return () => { isSetup = false }
-  }, [config])
+  }, [dbName, storeName, storageHandler, version])
 
   return cacheProvider
 }
