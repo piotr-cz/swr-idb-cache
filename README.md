@@ -40,7 +40,7 @@ To wait until provider is resolved, use bundled `useCacheProvider` hook or libra
 ```jsx
 // App.jsx
 import { SWRConfig } from 'swr'
-import { useCacheProvider } from 'swr-idb-cache'
+import { useCacheProvider } from '@piotr-cz/swr-idb-cache'
 
 function App() {
   // Initialize
