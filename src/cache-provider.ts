@@ -65,9 +65,11 @@ export default async function createCacheProvider<Data = any, Error = any>({
   })
 
   /**
-   * Ignore internal values (error, isValidaing)
+   * Ignore swr error and isValidaing values
+   * on swr 1.0+ these are $err$ and $req$
+   * on swr 1.2 it's $swr$
    */
-  function isResponseResult(key: TKey): boolean {
+  function isResponseResult(key: TKey, value?: any): boolean {
     return !key.startsWith('$')
   }
 }
