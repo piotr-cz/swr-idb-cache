@@ -6,9 +6,9 @@ import type { IDBPObjectStore, IDBPTransaction } from 'idb'
  */
 export type TConfig = {
   /** Database Name */
-  dbName?: string,
+  dbName: string,
   /** Store name */
-  storeName?: string,
+  storeName: string,
   /** Storage handler */
   storageHandler?: IStorageHandler,
   /** Schema version */

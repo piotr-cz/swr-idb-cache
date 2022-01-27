@@ -10,8 +10,8 @@ type TKey = string
  * Cache provider factory
  */
 export default async function createCacheProvider<Data = any, Error = any>({
-  dbName = 'cache',
-  storeName = 'swr',
+  dbName,
+  storeName,
   storageHandler = simpleStorageHandler,
   version = 1,
 }: TConfig): Promise<TCacheProvider> {

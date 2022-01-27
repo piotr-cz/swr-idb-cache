@@ -66,7 +66,7 @@ function App() {
 
 ## Configuration
 
-- `dbName` (optional): IndexedDB Database name, defaults to `cache`
-- `storeName` (optional): IndexedDB Store name, defaults to `swr`
+- `dbName`: IndexedDB Database name
+- `storeName`: IndexedDB Store name
 - `storageHandler` (optional): Custom Storage handler, see [IStorageHandler](./src/types.ts)
 - `veresion` (optional): Schema version, defaults to `1`
