@@ -35,7 +35,7 @@ yarn add @piotr-cz/@piotr-cz/swr-idb-cache
 
 Initialize library and when it's ready, pass it in configuration under `provider` key to SWR.
 
-To wait until provider is resolved, use bundled `useCacheProvider` hook or library like [react-use-promise](https://github.com/bsonntag/react-use-promise).
+To wait until provider is resolved, use bundled `useCacheProvider` hook:
 
 ```jsx
 // App.jsx
@@ -43,7 +43,7 @@ import { SWRConfig } from 'swr'
 import { useCacheProvider } from '@piotr-cz/swr-idb-cache'
 
 function App() {
-  // Initialize
+  // Initialize with
   const cacheProvider = useCacheProvider({
     dbName: 'my-app',
     storeName: 'swr-cache',
@@ -62,6 +62,24 @@ function App() {
     </SWRConfig>
   )
 }
+```
+
+…or library like [react-use-promise](https://github.com/bsonntag/react-use-promise):
+
+```js
+import createCacheProvider from '@piotr-cz/swr-idb-cache'
+import usePromise from 'react-use-promise'
+
+function App() {
+  // Initialize
+  const [ cacheProvider ] = usePromise(() => createCacheProvider({
+    dbName: 'my-app',
+    storeName: 'swr-cache',
+  }), [])
+
+  // …
+}
+
 ```
 
 ## Configuration
