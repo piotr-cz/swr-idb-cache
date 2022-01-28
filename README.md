@@ -43,7 +43,7 @@ import { SWRConfig } from 'swr'
 import { useCacheProvider } from '@piotr-cz/swr-idb-cache'
 
 function App() {
-  // Initialize with
+  // Initialize
   const cacheProvider = useCacheProvider({
     dbName: 'my-app',
     storeName: 'swr-cache',
