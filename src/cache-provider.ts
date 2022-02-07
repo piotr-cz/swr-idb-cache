@@ -62,6 +62,17 @@ export default async function createCacheProvider<Data = any, Error = any>({
         db.delete(storeName, key)
       }
     },
+
+    /**
+     * Documented, but missing method type
+     * @link https://swr.vercel.app/docs/advanced/cache#access-to-the-cache
+     * @link https://github.com/vercel/swr/pull/1480
+     */
+    // @ts-ignore
+    clear: (): void => {
+      map.clear()
+      db.clear(storeName)
+    },
   })
 
   /**
