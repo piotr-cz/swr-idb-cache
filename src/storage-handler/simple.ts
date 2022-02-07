@@ -1,9 +1,12 @@
 import type { IStorageHandler } from '../types'
 
+type TData = any
+type TStoreObject = TData
+
 /**
  * Simple storage handler
  */
-const simpleStorageHandler: IStorageHandler<any, any> = {
+const simpleStorageHandler: IStorageHandler<TData, TStoreObject> = {
   /**
    * @inheritdoc
    */
