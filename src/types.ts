@@ -11,7 +11,7 @@ export type TConfig = {
   storeName: string,
   /** Storage handler */
   storageHandler?: IStorageHandler,
-  /** Schema version */
+  /** Schema version; use when switching storage handlers on same database and store */
   version?: number,
 }
 
