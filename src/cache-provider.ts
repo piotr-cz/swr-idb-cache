@@ -15,7 +15,8 @@ export default async function createCacheProvider<Data = any, Error = any>({
   storageHandler = simpleStorageHandler,
   version = 1,
 }: TConfig): Promise<TCacheProvider> {
-  type TValue = Data | Error
+  type TKeyInfo = { isValidating: boolean, error?: Error | undefined }
+  type TValue = Data | TKeyInfo
   type TCache = Cache<TValue>
 
   // Initialize database
@@ -54,7 +55,7 @@ export default async function createCacheProvider<Data = any, Error = any>({
     set: (key: TKey, value: TValue): void => {
       map.set(key, value)
 
-      if (isResponseResult(key)) {
+      if (!isFetchInfo(key, value)) {
         db.put(storeName, storageHandler.replace(value), key)
       }
     },
@@ -63,7 +64,7 @@ export default async function createCacheProvider<Data = any, Error = any>({
      * Used only by useSWRInfinite
      */
     delete: (key: TKey): void => {
-      if (map.delete(key) && isResponseResult(key)) {
+      if (map.delete(key) && !isFetchInfo(key)) {
         db.delete(storeName, key)
       }
     },
@@ -81,11 +82,11 @@ export default async function createCacheProvider<Data = any, Error = any>({
   })
 
   /**
-   * Ignore swr error and isValidaing values
+   * Ignore swr error and isValidating values
    * on swr 1.0+ these are $err$ and $req$
    * on swr 1.2 it's $swr$
    */
-  function isResponseResult(key: TKey, value?: any): boolean {
-    return !key.startsWith('$')
+  function isFetchInfo(key: TKey, value?: TValue): value is TKeyInfo {
+    return key.startsWith('$')
   }
 }
