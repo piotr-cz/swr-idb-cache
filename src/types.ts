@@ -11,6 +11,8 @@ export type TConfig = {
   storeName: string,
   /** Storage handler */
   storageHandler?: IStorageHandler,
+  /** Evaluate if item should not be persisted */
+  ignore?: (key: string, value: any) => boolean,
   /** Schema version; use when switching storage handlers on same database and store */
   version?: number,
 }

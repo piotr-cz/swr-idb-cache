@@ -13,6 +13,7 @@ export default async function createCacheProvider<Data = any, Error = any>({
   dbName,
   storeName,
   storageHandler = simpleStorageHandler,
+  ignore = () => false,
   version = 1,
 }: TConfig): Promise<TCacheProvider> {
   type TKeyInfo = { isValidating: boolean, error?: Error | undefined }
@@ -55,7 +56,7 @@ export default async function createCacheProvider<Data = any, Error = any>({
     set: (key: TKey, value: TValue): void => {
       map.set(key, value)
 
-      if (!isFetchInfo(key, value)) {
+      if (!isFetchInfo(key, value) && !ignore(key, value)) {
         db.put(storeName, storageHandler.replace(value), key)
       }
     },

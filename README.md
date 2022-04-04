@@ -87,6 +87,7 @@ function App() {
 - `dbName`: IndexedDB Database name
 - `storeName`: IndexedDB Store name
 - `storageHandler` (optional): Custom Storage handler, see [IStorageHandler](./src/types.ts)
+- `ignore(key: string, value: any) => boolean` (optional): Evaluate if item should not be persisted. Use `useCallback` hook to prevent infinite loops.
 - `version` (optional): Schema version, defaults to `1`
 
 

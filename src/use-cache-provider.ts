@@ -10,6 +10,7 @@ export default function useCacheProvider<Data = any, Error = any>({
   dbName,
   storeName,
   storageHandler,
+  ignore,
   version,
 }: TConfig): TCacheProvider | undefined {
   const [ cacheProvider, setCacheProvider ] = useState<TCacheProvider>()
@@ -18,13 +19,13 @@ export default function useCacheProvider<Data = any, Error = any>({
     // False on mount or on dependency change
     let isSetup = true
 
-    createCacheProvider<Data, Error>({ dbName, storeName, storageHandler, version })
+    createCacheProvider<Data, Error>({ dbName, storeName, storageHandler, ignore, version })
       .then(cp =>
         isSetup && setCacheProvider(() => cp)
       )
 
     return () => { isSetup = false }
-  }, [dbName, storeName, storageHandler, version])
+  }, [dbName, storeName, storageHandler, ignore, version])
 
   return cacheProvider
 }
