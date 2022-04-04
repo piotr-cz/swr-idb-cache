@@ -87,7 +87,7 @@ function App() {
 - `dbName`: IndexedDB Database name
 - `storeName`: IndexedDB Store name
 - `storageHandler` (optional): Custom Storage handler, see [IStorageHandler](./src/types.ts)
-- `veresion` (optional): Schema version, defaults to `1`
+- `version` (optional): Schema version, defaults to `1`
 
 
 ## FAQ
