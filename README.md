@@ -88,3 +88,38 @@ function App() {
 - `storeName`: IndexedDB Store name
 - `storageHandler` (optional): Custom Storage handler, see [IStorageHandler](./src/types.ts)
 - `veresion` (optional): Schema version, defaults to `1`
+
+
+## FAQ
+
+### How do I delete cache entry?
+
+```tsx
+import { useSWRConfig } from 'swr'
+
+function Item() {
+  const { data, error } = useSWR('/api/data')
+  const { cache } = useSWRConfig()
+
+  const handleRemove = () => {
+    // Remove from state
+    // …
+
+    // Remove from cache with key used in useSWR hook
+    cache.delete('/api/data')
+  }
+
+  return (
+    <main>
+      {/** Show item */}
+      {data &&
+        <h1>{data.label}</h1>
+      }
+
+      {/** Remove item */}
+      <button onClick={handleRemove}>
+        Remove
+      </button>
+    </main>
+  )
+}
