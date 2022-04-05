@@ -36,7 +36,7 @@
   "devDependencies": {
     "@types/react": "^17.0.43",
     "bunchee": "1.8.2",
-    "react": "^17.0.0",
+    "react": "^18.0.0",
     "swr": "^1.2.2",
     "typescript": "^4.6.3"
   },
