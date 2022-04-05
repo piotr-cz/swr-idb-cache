@@ -86,18 +86,18 @@ function App() {
 
 - `dbName`: IndexedDB Database name
 - `storeName`: IndexedDB Store name
-- `storageHandler` (optional): Custom Storage handler, see [IStorageHandler](./src/types.ts)
+- `storageHandler` (optional): Custom Storage handler, see [IStorageHandler interface](./src/types.ts#L31)
 - `version` (optional): Schema version, defaults to `1`
 
 
-## FAQ
+## Recipes
 
-### How do I delete cache entry?
+### Delete cache entry
 
-```tsx
+```jsx
 import { useSWRConfig } from 'swr'
 
-function Item() {
+export default function Item() {
   const { data, error } = useSWR('/api/data')
   const { cache } = useSWRConfig()
 
