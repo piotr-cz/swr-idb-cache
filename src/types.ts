@@ -11,8 +11,6 @@ export type TConfig = {
   storeName: string,
   /** Storage handler */
   storageHandler?: IStorageHandler,
-  /** Evaluate if item should not be persisted */
-  ignore?: (key: string, value: any) => boolean,
   /** Schema version; use when switching storage handlers on same database and store */
   version?: number,
 }
@@ -43,11 +41,13 @@ export interface IStorageHandler<Data = any, StoreObject = any> {
 
   /**
    * Value replacer on db put
+   * Return undefined ignore item persistence
    */
-  replace(value: Data): StoreObject,
+  replace(key: string, value: Data): StoreObject | undefined,
 
   /**
    * Value reviver on db get
+   * Return undefined to remove item from cache
    */
-  revive(storeObject: StoreObject): Data,
+  revive(key: string, storeObject: StoreObject): Data | undefined,
 }

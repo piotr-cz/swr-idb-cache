@@ -10,12 +10,12 @@ const simpleStorageHandler: IStorageHandler<TData, TStoreObject> = {
   /**
    * @inheritdoc
    */
-  replace: value => value,
+  replace: (key, value) => value,
 
   /**
    * @inheritdoc
    */
-  revive: storeObject => storeObject,
+  revive: (key, storeObject) => storeObject,
 }
 
 export default simpleStorageHandler

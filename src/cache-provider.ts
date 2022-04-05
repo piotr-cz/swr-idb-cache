@@ -13,7 +13,6 @@ export default async function createCacheProvider<Data = any, Error = any>({
   dbName,
   storeName,
   storageHandler = simpleStorageHandler,
-  ignore = () => false,
   version = 1,
 }: TConfig): Promise<TCacheProvider> {
   type TKeyInfo = { isValidating: boolean, error?: Error | undefined }
@@ -37,12 +36,20 @@ export default async function createCacheProvider<Data = any, Error = any>({
   // Get storage snapshot
   const map = new Map<TKey, TValue>()
 
-  let cursor = await db.transaction(storeName).store.openCursor()
+  let cursor = await db.transaction(storeName, 'readwrite').store.openCursor()
 
   while (cursor) {
     const key = cursor.key as TKey
+    const value = storageHandler.revive(key, cursor.value)
 
-    map.set(key, storageHandler.revive(cursor.value))
+    // Stale
+    if (value === undefined) {
+      cursor.delete()
+    // OK
+    } else {
+      map.set(key, value)
+    }
+
     cursor = await cursor.continue()
   }
 
@@ -56,9 +63,17 @@ export default async function createCacheProvider<Data = any, Error = any>({
     set: (key: TKey, value: TValue): void => {
       map.set(key, value)
 
-      if (!isFetchInfo(key, value) && !ignore(key, value)) {
-        db.put(storeName, storageHandler.replace(value), key)
+      if (isFetchInfo(key, value)) {
+        return
       }
+
+      const storeValue = storageHandler.replace(key, value)
+
+      if (storeValue === undefined) {
+        return
+      }
+
+      db.put(storeName, storeValue, key)
     },
 
     /**
