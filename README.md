@@ -124,3 +124,69 @@ export default function Item() {
   )
 }
 ```
+
+### Implement Garbage Collector
+
+Define custom storage handler that extends timestamp storage
+
+```js
+// custom-storage-handler.js
+import { timestampStorageHandler } from '@piotr-cz/swr-idb-cache'
+
+// Define expiration timestamp as -7 days from current date
+const expirationTs = Date.now() - 7 * 24 * 60 * 60 * 1e3
+
+const gcStorageHandler = {
+  ...timestampStorageHandler,
+  // Revive each entry only when it's timestamp is newer than expiration timestamp
+  revive: (key, storeObject) => 
+    storeObject.ts > expirationTs
+      ? timestampStorageHandler.revive(key, storeObject)
+      : undefined,
+}
+
+export default gcStorageHandler
+```
+
+Pass it to configuration
+
+```diff
+// App.jsx
+import { SWRConfig } from 'swr'
+import { useCacheProvider } from '@piotr-cz/swr-idb-cache'
+
++import customStorageHandler from './custom-storage-handler.js'
+
+function App() {
+  // Initialize
+  const cacheProvider = useCacheProvider({
+    dbName: 'my-app',
+    storeName: 'swr-cache',
++   storageHandler: customStorageHandler,
+  })
+
+  // …
+}
+```
+
+### Ignore API endpoints from cache persistance
+
+Define custom storage handler that extends timestamp storage
+
+```js
+// custom-storage-handler.js
+import { timestampStorageHandler } from '@piotr-cz/swr-idb-cache'
+
+const blacklistStorageHandler = {
+  ...timestampStorageHandler,
+  // Ignore entries fetched from API endpoints starting with /api/device
+  replace: (key, value) =>
+    !key.startsWith('/api/device/')
+      ? timestampStorageHandler.replace(key, value)
+      : undefined,
+}
+
+export default blacklistStorageHandler
+```
+
+Pass it to configuration is in [recipe above](#implement-garbage-collector)
