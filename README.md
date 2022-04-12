@@ -125,6 +125,17 @@ export default function Item() {
 }
 ```
 
+## Known issues
+
+### React 18 in concurrent mode
+
+```
+Uncaught TypeError: Cannot read properties of undefined (reading '0')
+    at useSWRHandler (index.esm.js:631:1)
+```
+
+See SWR [Issue #1904](https://github.com/vercel/swr/issues/1904)
+
 ### Implement Garbage Collector
 
 Define custom storage handler that extends timestamp storage
