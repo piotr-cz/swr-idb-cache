@@ -28,7 +28,7 @@ yarn add @piotr-cz/@piotr-cz/swr-idb-cache
 
 ## Requirements
 
-- [SWR](https://swr.vercel.app/) 1.0+
+- [SWR](https://swr.vercel.app/) ^1.0.0
 
 
 ## Setup
