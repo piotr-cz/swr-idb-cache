@@ -13,6 +13,8 @@ export type TConfig = {
   storageHandler?: IStorageHandler,
   /** Schema version; use when switching storage handlers on same database and store */
   version?: number,
+  /** Error handler */
+  onError?: (reason: any) => void,
 }
 
 /**

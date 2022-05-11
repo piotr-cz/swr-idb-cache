@@ -14,6 +14,7 @@ export default async function createCacheProvider<Data = any, Error = any>({
   storeName,
   storageHandler = simpleStorageHandler,
   version = 1,
+  onError = () => {},
 }: TConfig): Promise<TCacheProvider> {
   type TKeyInfo = { isValidating: boolean, error?: Error | undefined }
   type TValue = Data | TKeyInfo
@@ -74,6 +75,7 @@ export default async function createCacheProvider<Data = any, Error = any>({
       }
 
       db.put(storeName, storeValue, key)
+        .catch(onError)
     },
 
     /**
@@ -82,6 +84,7 @@ export default async function createCacheProvider<Data = any, Error = any>({
     delete: (key: TKey): void => {
       if (map.delete(key) && !isFetchInfo(key)) {
         db.delete(storeName, key)
+          .catch(onError)
       }
     },
 

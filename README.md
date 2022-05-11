@@ -89,6 +89,7 @@ function App() {
 - `storeName`: IndexedDB Store name
 - `storageHandler` (optional): Custom Storage handler, see [IStorageHandler interface](./src/types.ts#L31)
 - `version` (optional): Schema version, defaults to `1`
+- `onError` (optional): Database error handler, defaults to noop function
 
 
 ## Known issues
@@ -102,6 +103,16 @@ Uncaught TypeError: Cannot read properties of undefined (reading '0')
 ```
 
 See SWR [Issue #1904](https://github.com/vercel/swr/issues/1904)
+
+
+### InvalidStateError
+
+```
+InvalidStateError
+Failed to execute 'transaction' on 'IDBDatabase': The database connection is closing.
+```
+
+See idb [Issue #229](https://github.com/jakearchibald/idb/issues/229)
 
 
 ## Recipes
