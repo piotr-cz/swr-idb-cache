@@ -1,5 +1,5 @@
 import type { Cache } from 'swr'
-import type { IDBPObjectStore, IDBPTransaction } from 'idb'
+import type { IDBPObjectStore, IDBPTransaction, OpenDBCallbacks } from 'idb'
 
 /**
  * Configuration options
@@ -39,6 +39,7 @@ export interface IStorageHandler<Data = any, StoreObject = any> {
     oldVersion: number,
     newVersion: number | null,
     transaction: IDBPTransaction<unknown, string[], 'versionchange'>,
+    event?: IDBVersionChangeEvent,
   ): void
 
   /**
