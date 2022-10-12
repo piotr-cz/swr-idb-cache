@@ -104,6 +104,7 @@ export default async function createCacheProvider<Data = any, Error = any>({
    * Ignore swr error and isValidating values
    * on swr 1.0+ these are $err$ and $req$
    * on swr 1.2 it's $swr$
+   * on swr 2.0.0-beta.0 this has changed: https://github.com/vercel/swr/discussions/1919
    */
   function isFetchInfo(key: TKey, value?: TValue): value is TKeyInfo {
     return key.startsWith('$')
