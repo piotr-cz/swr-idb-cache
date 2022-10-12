@@ -217,4 +217,4 @@ const blacklistStorageHandler = {
 export default blacklistStorageHandler
 ```
 
-Pass it to configuration is in [recipe above](#implement-garbage-collector)
+Pass it in configuration as in the [recipe above](#implement-garbage-collector)
