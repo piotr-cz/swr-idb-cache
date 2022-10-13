@@ -121,7 +121,7 @@ See idb [Issue #229](https://github.com/jakearchibald/idb/issues/229)
 ### Delete cache entry
 
 ```jsx
-import { useSWRConfig } from 'swr'
+import useSWR, { useSWRConfig } from 'swr'
 
 export default function Item() {
   const { data, error } = useSWR('/api/data')
