@@ -160,14 +160,14 @@ Define custom storage handler that extends timestamp storage
 // custom-storage-handler.js
 import { timestampStorageHandler } from '@piotr-cz/swr-idb-cache'
 
-// Define expiration timestamp as -7 days from current date
-const expirationTs = Date.now() - 7 * 24 * 60 * 60 * 1e3
+// Define max age of 7 days
+const maxAge = 7 * 24 * 60 * 60 * 1e3
 
 const gcStorageHandler = {
   ...timestampStorageHandler,
-  // Revive each entry only when it's timestamp is newer than expiration timestamp
+  // Revive each entry only when it's timestamp is newer than expiration
   revive: (key, storeObject) => 
-    storeObject.ts > expirationTs
+    storeObject.ts > Date.now() - maxAge
       ? timestampStorageHandler.revive(key, storeObject)
       : undefined,
 }
