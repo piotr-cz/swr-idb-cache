@@ -66,7 +66,13 @@ export default async function createCacheProvider<Data = any, Error = any>({
     set: (key: TKey, value: TState): void => {
       map.set(key, value)
 
-      const storeValue = storageHandler.replace(key, value)
+      /**
+       * Sanitize as non-native errors are not serializable, other properties are optional
+       * @link https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types
+       */
+      const { error, isValidating, isLoading, ...sanitizedValue } = value
+
+      const storeValue = storageHandler.replace(key, sanitizedValue)
 
       if (storeValue === undefined) {
         return
