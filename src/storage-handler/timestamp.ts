@@ -31,6 +31,6 @@ const timestampStorageHandler: IStorageHandler<TData, TStoreObject> = {
   revive: (key, storeObject) =>
     storeObject.value
   ,
-}
+} as const
 
 export default timestampStorageHandler

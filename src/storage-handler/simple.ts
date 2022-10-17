@@ -16,6 +16,6 @@ const simpleStorageHandler: IStorageHandler<TData, TStoreObject> = {
    * @inheritdoc
    */
   revive: (key, storeObject) => storeObject,
-}
+} as const
 
 export default simpleStorageHandler
