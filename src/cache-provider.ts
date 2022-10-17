@@ -1,4 +1,4 @@
-import type { Cache } from 'swr'
+import type { Cache as SWRCache, State as SWRState } from 'swr'
 import { openDB } from 'idb'
 
 import type { TCacheProvider, TConfig } from './types'
@@ -16,9 +16,8 @@ export default async function createCacheProvider<Data = any, Error = any>({
   version = 1,
   onError = () => {},
 }: TConfig): Promise<TCacheProvider> {
-  type TKeyInfo = { isValidating: boolean, error?: Error | undefined }
-  type TValue = Data | TKeyInfo
-  type TCache = Cache<TValue>
+  type TCache = SWRCache<Data>
+  type TState = SWRState<Data, Error>
 
   // Initialize database
   const db = await openDB(dbName, version, {
@@ -35,7 +34,7 @@ export default async function createCacheProvider<Data = any, Error = any>({
   })
 
   // Get storage snapshot
-  const map = new Map<TKey, TValue>()
+  const map = new Map<TKey, TState>()
 
   let cursor = await db.transaction(storeName, 'readwrite').store.openCursor()
 
@@ -58,15 +57,14 @@ export default async function createCacheProvider<Data = any, Error = any>({
    * SWR Cache provider API
    */
   return (globalCache: Readonly<TCache>): TCache => ({
-    get: (key: TKey): TValue | null | undefined =>
+    keys: () =>
+      map.keys(),
+
+    get: (key: TKey): TState | undefined =>
       map.get(key),
 
-    set: (key: TKey, value: TValue): void => {
+    set: (key: TKey, value: TState): void => {
       map.set(key, value)
-
-      if (isFetchInfo(key, value)) {
-        return
-      }
 
       const storeValue = storageHandler.replace(key, value)
 
@@ -82,7 +80,7 @@ export default async function createCacheProvider<Data = any, Error = any>({
      * Used only by useSWRInfinite
      */
     delete: (key: TKey): void => {
-      if (map.delete(key) && !isFetchInfo(key)) {
+      if (map.delete(key)) {
         db.delete(storeName, key)
           .catch(onError)
       }
@@ -99,14 +97,4 @@ export default async function createCacheProvider<Data = any, Error = any>({
       db.clear(storeName)
     },
   })
-
-  /**
-   * Ignore swr error and isValidating values
-   * on swr 1.0+ these are $err$ and $req$
-   * on swr 1.2 it's $swr$
-   * on swr 2.0.0-beta.0 this has changed: https://github.com/vercel/swr/discussions/1919
-   */
-  function isFetchInfo(key: TKey, value?: TValue): value is TKeyInfo {
-    return key.startsWith('$')
-  }
 }
