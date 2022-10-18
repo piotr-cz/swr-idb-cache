@@ -1,5 +1,5 @@
 import type { Cache } from 'swr'
-import type { IDBPObjectStore, IDBPTransaction, OpenDBCallbacks } from 'idb'
+import type { IDBPObjectStore, IDBPTransaction } from 'idb'
 
 /**
  * Configuration options
