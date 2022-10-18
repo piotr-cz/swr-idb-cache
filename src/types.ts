@@ -1,5 +1,5 @@
 import type { Cache } from 'swr'
-import type { IDBPObjectStore, IDBPTransaction } from 'idb'
+import type { IDBPDatabase } from 'idb'
 
 /**
  * Configuration options
@@ -32,14 +32,20 @@ export type TUseCacheProvider = (dbName?: string, storeName?: string, version?: 
  */
 export interface IStorageHandler<Data = any, StoreObject = any> {
   /**
-   * Initialize / ugprade database
+   * Initialize
    */
-  upgradeObjectStore?(
-    objectStore: IDBPObjectStore<unknown, ArrayLike<string>, string, 'versionchange'>,
-    oldVersion: number,
-    newVersion: number | null,
-    transaction: IDBPTransaction<unknown, string[], 'versionchange'>,
-    event?: IDBVersionChangeEvent,
+  initialize(
+    upgradeDb: IDBPDatabase<unknown>,
+    storeName: string
+  ): void
+
+  /**
+   * Upgrade
+   */
+  upgrade(
+    upgradeDb: IDBPDatabase<unknown>,
+    storeName: string,
+    oldVesion: number,
   ): void
 
   /**
