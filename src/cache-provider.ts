@@ -22,15 +22,12 @@ export default async function createCacheProvider<Data = any, Error = any>({
 
   // Initialize database
   const db = await openDB(dbName, version, {
-    upgrade: (upgradeDb, oldVersion, ...rest) => {
-      // Delete previous object store on upgrade
-      if (oldVersion && version > oldVersion) {
-        upgradeDb.deleteObjectStore(storeName)
+    upgrade (upgradeDb, oldVersion) {
+      if (!oldVersion) {
+        storageHandler.initialize(upgradeDb, storeName)
+      } else {
+        storageHandler.upgrade(upgradeDb, storeName, oldVersion)
       }
-
-      const objectStore = upgradeDb.createObjectStore(storeName)
-
-      storageHandler.upgradeObjectStore?.(objectStore, oldVersion, ...rest)
     }
   })
 

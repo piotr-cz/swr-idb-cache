@@ -1,4 +1,5 @@
 import type { IStorageHandler } from '../types'
+import simpleStorageHandler from './simple'
 
 type TData = any
 type TStoreObject = {
@@ -10,12 +11,16 @@ type TStoreObject = {
  * Storage value handler that wraps value in object containing timestamp
  */
 const timestampStorageHandler: IStorageHandler<TData, TStoreObject> = {
+  ...simpleStorageHandler,
+
   /**
    * @inheritdoc
    */
-  upgradeObjectStore: objectStore =>
+  initialize (database, storeName) {
+    const objectStore = database.createObjectStore(storeName)
+
     objectStore.createIndex('ts', 'ts')
-  ,
+  },
 
   /**
    * @inheritdoc

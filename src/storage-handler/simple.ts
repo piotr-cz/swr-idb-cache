@@ -10,6 +10,22 @@ const simpleStorageHandler: IStorageHandler<TData, TStoreObject> = {
   /**
    * @inheritdoc
    */
+  initialize (database, storeName) {
+    database.createObjectStore(storeName)
+  },
+
+  /**
+   * @inheritdoc
+   */
+  upgrade (database, storeName) {
+    database.deleteObjectStore(storeName)
+
+    this.initialize(database, storeName)
+  },
+
+  /**
+   * @inheritdoc
+   */
   replace: (key, value) => value,
 
   /**

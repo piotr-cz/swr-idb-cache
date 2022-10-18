@@ -197,7 +197,7 @@ function App() {
 ```
 
 
-### Ignore API endpoints from cache persistance
+### Ignore API endpoints from cache persistence
 
 Define custom storage handler that extends timestamp storage
 
