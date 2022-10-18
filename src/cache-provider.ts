@@ -66,13 +66,11 @@ export default async function createCacheProvider<Data = any, Error = any>({
     set: (key: TKey, value: TState): void => {
       map.set(key, value)
 
-      /**
-       * Sanitize as non-native errors are not serializable, other properties are optional
-       * @link https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types
-       */
-      const { error, isValidating, isLoading, ...sanitizedValue } = value
+      if (isFetchInfo(value)) {
+        return
+      }
 
-      const storeValue = storageHandler.replace(key, sanitizedValue)
+      const storeValue = storageHandler.replace(key, value)
 
       if (storeValue === undefined) {
         return
@@ -103,4 +101,16 @@ export default async function createCacheProvider<Data = any, Error = any>({
       db.clear(storeName)
     },
   })
+
+  /**
+   * Do not store as non-native errors are not serializable, other properties are optional
+   * @link https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types
+   */
+  function isFetchInfo(state: TState): boolean {
+    return (
+      state.error instanceof Error ||
+      state.isValidating === true ||
+      state.isLoading === true
+    )
+  }
 }
