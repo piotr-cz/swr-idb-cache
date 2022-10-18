@@ -23,7 +23,7 @@ export default async function createCacheProvider<Data = any, Error = any>({
 
   // Initialize database
   const db = await openDB(dbName, version, {
-    upgrade: (upgradeDb, oldVersion) => {
+    upgrade (upgradeDb, oldVersion) {
       if (!oldVersion) {
         storageHandler.initialize(upgradeDb, storeName)
       } else {

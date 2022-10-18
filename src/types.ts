@@ -36,7 +36,7 @@ export interface IStorageHandler<Data = any, StoreObject = any> {
    */
   initialize(
     upgradeDb: IDBPDatabase<unknown>,
-    storeName: string
+    storeName: string,
   ): void
 
   /**
@@ -52,11 +52,11 @@ export interface IStorageHandler<Data = any, StoreObject = any> {
    * Value replacer on db put
    * Return undefined ignore item persistence
    */
-  replace(key: string, value: Data): StoreObject | undefined,
+  replace: (key: string, value: Data) => StoreObject | undefined,
 
   /**
    * Value reviver on db get
    * Return undefined to remove item from cache
    */
-  revive(key: string, storeObject: StoreObject): Data | undefined,
+  revive: (key: string, storeObject: StoreObject) => Data | undefined,
 }
