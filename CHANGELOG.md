@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Changed
-- IStorageHandler signature to use initialize and upgrade methods
+- BREAKING: IStorageHandler signature to use initialize and upgrade methods
 
 ### Fixed
 - Export IStorageHandler interface
