@@ -16,4 +16,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Initial release
 
 [Unreleased]: https://github.com/piotr-cz/swr-idb-cache/compare/v1.0.0-rc.1...HEAD
-[1.0.0]: https://github.com/piotr-cz/swr-idb-cache/releases/tag/v1.0.0-rc.1
+[1.0.0-rc.1]: https://github.com/piotr-cz/swr-idb-cache/releases/tag/v1.0.0-rc.1
