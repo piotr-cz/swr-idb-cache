@@ -89,7 +89,7 @@ export default async function createCacheProvider<Data = any, Error = any>({
     /**
      * Documented, but missing method type
      * @link https://swr.vercel.app/docs/advanced/cache#access-to-the-cache
-     * @link https://github.com/vercel/swr/pull/1480
+     * @link https://github.com/vercel/swr/pull/1936
      */
     // @ts-ignore
     clear: (): void => {
