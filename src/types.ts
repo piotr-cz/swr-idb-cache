@@ -4,13 +4,13 @@ import type { IDBPDatabase } from 'idb'
 /**
  * Configuration options
  */
-export type TConfig = {
+export type Config = {
   /** Database Name */
   dbName: string,
   /** Store name */
   storeName: string,
   /** Storage handler */
-  storageHandler?: IStorageHandler,
+  storageHandler?: StorageHandler,
   /** Schema version; use when switching storage handlers on same database and store */
   version?: number,
   /** Error handler */
@@ -20,17 +20,17 @@ export type TConfig = {
 /**
  * Cache provider interface, missing in swr
  */
-export type TCacheProvider = (globalCache: Readonly<Cache>) => Cache
+export type CacheProvider = (globalCache: Readonly<Cache>) => Cache
 
 /**
  * Use cache provider interface
  */
-export type TUseCacheProvider = (dbName?: string, storeName?: string, version?: number, storageHandler?: IStorageHandler) => TCacheProvider | undefined
+export type UseCacheProvider = (dbName?: string, storeName?: string, version?: number, storageHandler?: StorageHandler) => CacheProvider | undefined
 
 /**
  * Storage handler for Transferrable object
  */
-export interface IStorageHandler<Data = any, StoreObject = any> {
+export interface StorageHandler<Data = any, StoreObject = any> {
   /**
    * Initialize
    */

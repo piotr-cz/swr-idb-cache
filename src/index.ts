@@ -10,7 +10,7 @@ export { default as timestampStorageHandler } from './storage-handler/timestamp'
 
 // Types
 export type {
-  TConfig,
-  TUseCacheProvider,
-  IStorageHandler,
+  Config,
+  UseCacheProvider,
+  StorageHandler,
 } from './types'

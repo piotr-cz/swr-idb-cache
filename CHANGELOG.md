@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Changed
+- BREAKING: Removed types prefix (ie. IStorageHandler -> StorageHandler)
+
+## [1.0.0-rc.2] - 2022-10-19
+### Changed
 - BREAKING: IStorageHandler signature to use initialize and upgrade methods
 
 ### Fixed
@@ -15,5 +19,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial release
 
-[Unreleased]: https://github.com/piotr-cz/swr-idb-cache/compare/v1.0.0-rc.1...HEAD
-[1.0.0]: https://github.com/piotr-cz/swr-idb-cache/releases/tag/v1.0.0-rc.1
+[Unreleased]: https://github.com/piotr-cz/swr-idb-cache/compare/v1.0.0-rc.2...HEAD
+[1.0.0-rc.2]: https://github.com/piotr-cz/swr-idb-cache/compare/v1.0.0-rc.1...v1.0.0-rc.2
+[1.0.0-rc.1]: https://github.com/piotr-cz/swr-idb-cache/releases/tag/v1.0.0-rc.1
