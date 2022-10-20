@@ -178,22 +178,21 @@ export default gcStorageHandler
 Pass it to configuration
 
 ```diff
-// App.jsx
-import { SWRConfig } from 'swr'
-import { useCacheProvider } from '@piotr-cz/swr-idb-cache'
+ // App.jsx
+ import { SWRConfig } from 'swr'
+ import { useCacheProvider } from '@piotr-cz/swr-idb-cache'
 
 +import customStorageHandler from './custom-storage-handler.js'
++
+ function App() {
+   // Initialize
+   const cacheProvider = useCacheProvider({
+     dbName: 'my-app',
+     storeName: 'swr-cache',
++    storageHandler: customStorageHandler,
+   })
 
-function App() {
-  // Initialize
-  const cacheProvider = useCacheProvider({
-    dbName: 'my-app',
-    storeName: 'swr-cache',
-+   storageHandler: customStorageHandler,
-  })
-
-  // …
-}
+   // …
 ```
 
 
