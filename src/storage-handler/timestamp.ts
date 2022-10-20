@@ -1,16 +1,16 @@
-import type { IStorageHandler } from '../types'
+import type { StorageHandler } from '../types'
 import simpleStorageHandler from './simple'
 
-type TData = any
-type TStoreObject = {
-  value: TData,
+type Data = any
+type StoreObject = {
+  value: Data,
   ts: number,
 }
 
 /**
  * Storage value handler that wraps value in object containing timestamp
  */
-const timestampStorageHandler: IStorageHandler<TData, TStoreObject> = {
+const timestampStorageHandler: StorageHandler<Data, StoreObject> = {
   ...simpleStorageHandler,
 
   /**

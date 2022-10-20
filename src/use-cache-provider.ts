@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-import type { TCacheProvider, TConfig } from './types'
+import type { CacheProvider, Config } from './types'
 import createCacheProvider from './cache-provider'
 
 /**
@@ -12,8 +12,8 @@ export default function useCacheProvider<Data = any, Error = any>({
   storageHandler,
   version,
   onError,
-}: TConfig): TCacheProvider | undefined {
-  const [ cacheProvider, setCacheProvider ] = useState<TCacheProvider>()
+}: Config): CacheProvider | undefined {
+  const [ cacheProvider, setCacheProvider ] = useState<CacheProvider>()
 
   useEffect(() => {
     // False on mount or on dependency change

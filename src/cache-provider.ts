@@ -1,11 +1,11 @@
-import type { Cache } from 'swr'
+import type { Cache as SWRCache} from 'swr'
 import { openDB } from 'idb'
 
-import type { TCacheProvider, TConfig } from './types'
+import type { CacheProvider, Config } from './types'
 import simpleStorageHandler from './storage-handler/simple'
 
 // Unlinke what SWR types suggest, key is always a serialized string
-type TKey = string
+type Key = string
 
 /**
  * Cache provider factory
@@ -16,10 +16,10 @@ export default async function createCacheProvider<Data = any, Error = any>({
   storageHandler = simpleStorageHandler,
   version = 1,
   onError = () => {},
-}: TConfig): Promise<TCacheProvider> {
-  type TKeyInfo = { isValidating: boolean, error?: Error | undefined }
-  type TValue = Data | TKeyInfo
-  type TCache = Cache<TValue>
+}: Config): Promise<CacheProvider> {
+  type KeyInfo = { isValidating: boolean, error?: Error | undefined }
+  type Value = Data | KeyInfo
+  type Cache = SWRCache<Value>
 
   // Initialize database
   const db = await openDB(dbName, version, {
@@ -33,12 +33,12 @@ export default async function createCacheProvider<Data = any, Error = any>({
   })
 
   // Get storage snapshot
-  const map = new Map<TKey, TValue>()
+  const map = new Map<Key, Value>()
 
   let cursor = await db.transaction(storeName, 'readwrite').store.openCursor()
 
   while (cursor) {
-    const key = cursor.key as TKey
+    const key = cursor.key as Key
     const value = storageHandler.revive(key, cursor.value)
 
     // Stale
@@ -55,11 +55,11 @@ export default async function createCacheProvider<Data = any, Error = any>({
   /**
    * SWR Cache provider API
    */
-  return (globalCache: Readonly<TCache>): TCache => ({
-    get: (key: TKey): TValue | null | undefined =>
+  return (globalCache: Readonly<Cache>): Cache => ({
+    get: (key: Key): Value | null | undefined =>
       map.get(key),
 
-    set: (key: TKey, value: TValue): void => {
+    set: (key: Key, value: Value): void => {
       map.set(key, value)
 
       if (isFetchInfo(key, value)) {
@@ -79,7 +79,7 @@ export default async function createCacheProvider<Data = any, Error = any>({
     /**
      * Used only by useSWRInfinite
      */
-    delete: (key: TKey): void => {
+    delete: (key: Key): void => {
       if (map.delete(key) && !isFetchInfo(key)) {
         db.delete(storeName, key)
           .catch(onError)
@@ -104,7 +104,7 @@ export default async function createCacheProvider<Data = any, Error = any>({
    * on swr 1.2 it's $swr$
    * on swr 2.0.0-beta.0 this has changed: https://github.com/vercel/swr/discussions/1919
    */
-  function isFetchInfo(key: TKey, value?: TValue): value is TKeyInfo {
+  function isFetchInfo(key: Key, value?: Value): value is KeyInfo {
     return key.startsWith('$')
   }
 }
