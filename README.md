@@ -168,7 +168,9 @@ const gcStorageHandler = {
   // Revive each entry only when it's timestamp is newer than expiration
   revive: (key, storeObject) => 
     storeObject.ts > Date.now() - maxAge
+      // Unwrapped value
       ? timestampStorageHandler.revive(key, storeObject)
+      // Undefined to indicate item is stale
       : undefined,
 }
 
@@ -178,22 +180,21 @@ export default gcStorageHandler
 Pass it to configuration
 
 ```diff
-// App.jsx
-import { SWRConfig } from 'swr'
-import { useCacheProvider } from '@piotr-cz/swr-idb-cache'
+ // App.jsx
+ import { SWRConfig } from 'swr'
+ import { useCacheProvider } from '@piotr-cz/swr-idb-cache'
 
 +import customStorageHandler from './custom-storage-handler.js'
++
+ function App() {
+   // Initialize
+   const cacheProvider = useCacheProvider({
+     dbName: 'my-app',
+     storeName: 'swr-cache',
++    storageHandler: customStorageHandler,
+   })
 
-function App() {
-  // Initialize
-  const cacheProvider = useCacheProvider({
-    dbName: 'my-app',
-    storeName: 'swr-cache',
-+   storageHandler: customStorageHandler,
-  })
-
-  // …
-}
+   // …
 ```
 
 
@@ -210,7 +211,9 @@ const blacklistStorageHandler = {
   // Ignore entries fetched from API endpoints starting with /api/device
   replace: (key, value) =>
     !key.startsWith('/api/device/')
+      // Wrapped value
       ? timestampStorageHandler.replace(key, value)
+      // Undefined to ignore storing value
       : undefined,
 }
 
