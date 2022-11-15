@@ -95,16 +95,6 @@ function App() {
 ## Known issues
 
 
-### React 18 in concurrent mode
-
-```
-Uncaught TypeError: Cannot read properties of undefined (reading '0')
-    at useSWRHandler (index.esm.js:631:1)
-```
-
-Fixed in swr [2.0.0-beta.3](https://github.com/vercel/swr/releases/tag/2.0.0-beta.3) (see SWR [Issue #1904](https://github.com/vercel/swr/issues/1904))
-
-
 ### InvalidStateError
 
 ```
