@@ -28,7 +28,8 @@ yarn add @piotr-cz/@piotr-cz/swr-idb-cache
 
 ## Requirements
 
-- [SWR](https://swr.vercel.app/) ^2.0.0-rc.0
+- [SWR](https://swr.vercel.app/) ^2.0.0-rc.0  
+  *Note: For SWR 1.x use 1.0.0-rc.2*
 - Works with [React](https://reactjs.org/) ^16.11 and [Preact](https://preactjs.com/)
 
 ## Setup
