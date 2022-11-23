@@ -1,4 +1,4 @@
-import type { Cache as SWRCache} from 'swr'
+import type { Cache as SWRCache, State as SWRState } from 'swr'
 import { openDB } from 'idb'
 
 import type { CacheProvider, Config } from './types'
@@ -17,9 +17,8 @@ export default async function createCacheProvider<Data = any, Error = any>({
   version = 1,
   onError = () => {},
 }: Config): Promise<CacheProvider> {
-  type KeyInfo = { isValidating: boolean, error?: Error | undefined }
-  type Value = Data | KeyInfo
-  type Cache = SWRCache<Value>
+  type Cache = SWRCache<Data>
+  type State = SWRState<Data, Error>
 
   // Initialize database
   const db = await openDB(dbName, version, {
@@ -33,7 +32,7 @@ export default async function createCacheProvider<Data = any, Error = any>({
   })
 
   // Get storage snapshot
-  const map = new Map<Key, Value>()
+  const map = new Map<Key, State>()
 
   let cursor = await db.transaction(storeName, 'readwrite').store.openCursor()
 
@@ -56,13 +55,16 @@ export default async function createCacheProvider<Data = any, Error = any>({
    * SWR Cache provider API
    */
   return (globalCache: Readonly<Cache>): Cache => ({
-    get: (key: Key): Value | null | undefined =>
+    keys: () =>
+      map.keys(),
+
+    get: (key: Key): State | undefined =>
       map.get(key),
 
-    set: (key: Key, value: Value): void => {
+    set: (key: Key, value: State): void => {
       map.set(key, value)
 
-      if (isFetchInfo(key, value)) {
+      if (isFetchInfo(value)) {
         return
       }
 
@@ -80,7 +82,7 @@ export default async function createCacheProvider<Data = any, Error = any>({
      * Used only by useSWRInfinite
      */
     delete: (key: Key): void => {
-      if (map.delete(key) && !isFetchInfo(key)) {
+      if (map.delete(key)) {
         db.delete(storeName, key)
           .catch(onError)
       }
@@ -99,12 +101,14 @@ export default async function createCacheProvider<Data = any, Error = any>({
   })
 
   /**
-   * Ignore swr error and isValidating values
-   * on swr 1.0+ these are $err$ and $req$
-   * on swr 1.2 it's $swr$
-   * on swr 2.0.0-beta.0 this has changed: https://github.com/vercel/swr/discussions/1919
+   * Do not store as non-native errors are not serializable, other properties are optional
+   * @link https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types
    */
-  function isFetchInfo(key: Key, value?: Value): value is KeyInfo {
-    return key.startsWith('$')
+  function isFetchInfo(state: State): boolean {
+    return (
+      state.error instanceof Error ||
+      state.isValidating === true ||
+      state.isLoading === true
+    )
   }
 }
