@@ -6,10 +6,10 @@ Please note that the cache provider initialization process is asynchronous and u
 
 ## How does it work?
 
-Library reads current state of cache stored in IndexedDB into memory using [idb](https://github.com/jakearchibald/idb) during initialization.
+Library reads current state of cache stored in [IndexedDB](https://developer.mozilla.org/en-US/docs/Glossary/IndexedDB) into memory using [idb](https://github.com/jakearchibald/idb) during it's initialization.
 Then it resolves into Cache Provider which should be passed to SWR.
 
-Read [SWR docs on Cache](https://swr.vercel.app/docs/advanced/cache) for more info
+Read SWR Docs > [Cache](https://swr.vercel.app/docs/advanced/cache) if your are interested in more information about implementation details.
 
 
 ## Installation
