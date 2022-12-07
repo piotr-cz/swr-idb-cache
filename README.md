@@ -2,6 +2,7 @@
 
 Synchronize SWR Cache with [IndexedDB](https://developer.mozilla.org/en-US/docs/Glossary/IndexedDB) to get offline cache.
 
+Please note that the cache provider initialization process is asynchronous and until it's resolved best practise is to render fallback component.
 
 ## How does it work?
 
@@ -50,7 +51,7 @@ function App() {
     storeName: 'swr-cache',
   })
 
-  // Not ready yet, render fallback component
+  // Cache Provider is being initialized - render fallback component in the meantime
   if (!cacheProvider) {
     return <div>Initializing cache…</div>
   }
