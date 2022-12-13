@@ -37,7 +37,7 @@
     "@types/react": "^17.0.43",
     "bunchee": "^2.1.5",
     "react": "^17.0.0",
-    "swr": "^2.0.0-rc.0",
+    "swr": "^2.0.0",
     "typescript": "^4.6.3"
   },
   "peerDependencies": {
