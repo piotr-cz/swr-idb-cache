@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Changed
-- Do not recreate cache provider on config options change (#10)
+- Do not recreate cache provider on config options change [#10](https://github.com/piotr-cz/swr-idb-cache/pull/10)
 
 ## [1.0.0] - 2022-12-30
 ### Added
