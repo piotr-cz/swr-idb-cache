@@ -1,5 +1,5 @@
 import type { Cache as SWRCache, State as SWRState } from 'swr'
-import { openDB } from 'idb'
+import { IDBPDatabase, openDB } from 'idb'
 
 import type { CacheProvider, Config } from './types'
 import simpleStorageHandler from './storage-handler/simple'
@@ -20,20 +20,29 @@ export default async function createCacheProvider<Data = any, Error = any>({
   type Cache = SWRCache<Data>
   type State = SWRState<Data, Error>
 
-  // Initialize database
-  const db = await openDB(dbName, version, {
-    upgrade (upgradeDb, oldVersion) {
-      if (!oldVersion) {
-        storageHandler.initialize(upgradeDb, storeName)
-      } else {
-        storageHandler.upgrade(upgradeDb, storeName, oldVersion)
-      }
-    }
-  })
-
-  // Get storage snapshot
+  // Initialize storage snapshot
   const map = new Map<Key, State>()
 
+  // Initialize database
+  let db: IDBPDatabase
+
+  try {
+    db = await openDB(dbName, version, {
+      upgrade (upgradeDb, oldVersion) {
+        if (!oldVersion) {
+          storageHandler.initialize(upgradeDb, storeName)
+        } else {
+          storageHandler.upgrade(upgradeDb, storeName, oldVersion)
+        }
+      }
+    })
+  } catch (error) {
+    // Use fallback
+    onError(error)
+    return (): Cache => map
+  }
+
+  // Get storage snapshot
   let cursor = await db.transaction(storeName, 'readwrite').store.openCursor()
 
   while (cursor) {
