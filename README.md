@@ -93,6 +93,7 @@ function App() {
 - `version` (optional): Schema version, defaults to `1`
 - `onError` (optional): Database error handler, defaults to noop function
 
+Note: When using `useCacheProvider`, changing options doesn't create new cache provider.
 
 ## Known issues
 
