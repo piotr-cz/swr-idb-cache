@@ -23,7 +23,8 @@ npm install --save @piotr-cz/swr-idb-cache
 or Yarn:
 
 ```console
-yarn add @piotr-cz/@piotr-cz/swr-idb-cache
+yarn add @piotr-cz/swr-idb-cache
+
 ```
 
 
