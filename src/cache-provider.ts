@@ -39,11 +39,11 @@ export default async function createCacheProvider<Data = any, Error = any>({
 
     // Get storage snapshot
     let cursor = await db.transaction(storeName, 'readwrite').store.openCursor()
-  
+
     while (cursor) {
       const key = cursor.key as Key
       const value = storageHandler.revive(key, cursor.value)
-  
+
       // Stale
       if (value === undefined) {
         cursor.delete()
@@ -51,7 +51,7 @@ export default async function createCacheProvider<Data = any, Error = any>({
       } else {
         map.set(key, value)
       }
-  
+
       cursor = await cursor.continue()
     }
   } catch (error) {
