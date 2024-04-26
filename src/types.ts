@@ -23,11 +23,6 @@ export type Config = {
 export type CacheProvider = (globalCache: Readonly<Cache>) => Cache
 
 /**
- * Use cache provider interface
- */
-export type UseCacheProvider = (dbName?: string, storeName?: string, version?: number, storageHandler?: StorageHandler) => CacheProvider | undefined
-
-/**
  * Storage handler for Transferrable object
  */
 export interface StorageHandler<Data = any, StoreObject = any> {
