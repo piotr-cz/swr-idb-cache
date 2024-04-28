@@ -16,6 +16,7 @@ export default function createCacheProvider<Data = any, Error = any>({
   storageHandler = simpleStorageHandler,
   version = 1,
   onError = () => {},
+  onInit = () => {},
 }: Config): CacheProvider {
   type Cache = SWRCache<Data>
   type State = SWRState<Data, Error>
@@ -57,9 +58,12 @@ export default function createCacheProvider<Data = any, Error = any>({
       cursor = await cursor.continue()
     }
   }
-  initDb().then(() => {
-    initLock = false
-   })
+  initDb()
+    .then(() => {
+      initLock = false;
+      onInit()
+    })
+    .catch(onError);
 
   /**
    * SWR Cache provider API
