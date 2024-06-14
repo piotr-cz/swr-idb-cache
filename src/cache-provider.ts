@@ -63,7 +63,7 @@ export default async function createCacheProvider<Data = any, Error = any>({
   /**
    * SWR Cache provider API
    */
-  return (globalCache: Readonly<Cache>): Cache => ({
+  return (_globalCache: Readonly<Cache>): Cache => ({
     keys: () =>
       map.keys(),
 

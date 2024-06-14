@@ -9,7 +9,7 @@
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": false,
     "noUnusedLocals": true,
-    "noUnusedParameters": false,
+    "noUnusedParameters": true,
     "strictBindCallApply": true,
     "outDir": "./dist",
     "rootDir": "./src",

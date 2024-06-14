@@ -26,12 +26,12 @@ const simpleStorageHandler: StorageHandler<Data, StoreObject> = {
   /**
    * @inheritdoc
    */
-  replace: (key, value) => value,
+  replace: (_key, value) => value,
 
   /**
    * @inheritdoc
    */
-  revive: (key, storeObject) => storeObject,
+  revive: (_key, storeObject) => storeObject,
 } as const
 
 export default simpleStorageHandler

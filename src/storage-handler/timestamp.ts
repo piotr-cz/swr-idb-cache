@@ -25,7 +25,7 @@ const timestampStorageHandler: StorageHandler<Data, StoreObject> = {
   /**
    * @inheritdoc
    */
-  replace: (key, value) => ({
+  replace: (_key, value) => ({
     value,
     ts: Date.now(),
   }),
@@ -33,7 +33,7 @@ const timestampStorageHandler: StorageHandler<Data, StoreObject> = {
   /**
    * @inheritdoc
    */
-  revive: (key, storeObject) =>
+  revive: (_key, storeObject) =>
     storeObject.value
   ,
 } as const
