@@ -1,6 +1,6 @@
 {
   "name": "@piotr-cz/swr-idb-cache",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "IndexedDB Cache Provider for SWR",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
