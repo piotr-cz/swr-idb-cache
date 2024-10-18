@@ -1,5 +1,6 @@
 import type { Cache as SWRCache, State as SWRState } from 'swr'
-import { IDBPDatabase, openDB } from 'idb'
+import type { IDBPDatabase } from 'idb'
+import { openDB } from 'idb'
 
 import type { CacheProvider, Config } from './types'
 import simpleStorageHandler from './storage-handler/simple'
