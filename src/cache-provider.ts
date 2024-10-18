@@ -11,13 +11,14 @@ type Key = string
 /**
  * Cache provider factory
  */
-export default async function createCacheProvider<Data = any, Error = any>({
+export default function createCacheProvider<Data = any, Error = any>({
   dbName,
   storeName,
   storageHandler = simpleStorageHandler,
   version = 1,
   onError = () => {},
-}: Config): Promise<CacheProvider> {
+  onInit = () => {},
+}: Config): CacheProvider {
   type Cache = SWRCache<Data>
   type State = SWRState<Data, Error>
 
@@ -27,7 +28,9 @@ export default async function createCacheProvider<Data = any, Error = any>({
   // Initialize database
   let db: IDBPDatabase
 
-  try {
+  let initLock = true // Lock the database operation until the database finishes initializing
+
+  async function initDb() {
     db = await openDB(dbName, version, {
       upgrade (upgradeDb, oldVersion) {
         if (!oldVersion) {
@@ -55,11 +58,13 @@ export default async function createCacheProvider<Data = any, Error = any>({
 
       cursor = await cursor.continue()
     }
-  } catch (error) {
-    // Use fallback
-    onError(error)
-    return (): Cache => map
   }
+  initDb()
+    .then(() => {
+      initLock = false;
+      onInit()
+    })
+    .catch(onError);
 
   /**
    * SWR Cache provider API
@@ -74,7 +79,7 @@ export default async function createCacheProvider<Data = any, Error = any>({
     set: (key: Key, value: State): void => {
       map.set(key, value)
 
-      if (isFetchInfo(value)) {
+      if (isFetchInfo(value) || initLock) {
         return
       }
 
@@ -93,6 +98,9 @@ export default async function createCacheProvider<Data = any, Error = any>({
      */
     delete: (key: Key): void => {
       if (map.delete(key)) {
+        if (initLock) {
+          return
+        }
         db.delete(storeName, key)
           .catch(onError)
       }

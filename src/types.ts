@@ -15,17 +15,14 @@ export type Config = {
   version?: number,
   /** Error handler */
   onError?: (reason: any) => void,
+  /** Initialize callback */
+  onInit?: () => void,
 }
 
 /**
  * Cache provider interface, missing in swr
  */
 export type CacheProvider = (globalCache: Readonly<Cache>) => Cache
-
-/**
- * Use cache provider interface
- */
-export type UseCacheProvider = (dbName?: string, storeName?: string, version?: number, storageHandler?: StorageHandler) => CacheProvider | undefined
 
 /**
  * Storage handler for Transferrable object
