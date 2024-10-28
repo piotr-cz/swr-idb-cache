@@ -17,7 +17,7 @@ export default async function createCacheProvider<Data = any, Error = any>({
   storageHandler = simpleStorageHandler,
   version = 1,
   onError = () => {},
-}: Config): Promise<CacheProvider> {
+}: Config): Promise<CacheProvider<Data>> {
   type Cache = SWRCache<Data>
   type State = SWRState<Data, Error>
 

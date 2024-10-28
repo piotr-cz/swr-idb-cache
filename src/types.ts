@@ -1,4 +1,4 @@
-import type { Cache } from 'swr'
+import type { Cache as SWRCache } from 'swr'
 import type { IDBPDatabase } from 'idb'
 
 /**
@@ -20,7 +20,7 @@ export type Config = {
 /**
  * Cache provider interface, missing in swr
  */
-export type CacheProvider = (globalCache: Readonly<Cache>) => Cache
+export type CacheProvider<Data = any> = (globalCache: Readonly<SWRCache<Data>>) => SWRCache<Data>
 
 /**
  * Use cache provider interface
