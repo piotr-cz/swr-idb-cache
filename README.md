@@ -221,3 +221,34 @@ export default blacklistStorageHandler
 ```
 
 Pass it in configuration as in the [recipe above](#implement-garbage-collector)
+
+### Mocking package in tests
+
+- Use mock IndexedDB
+
+  ```shell
+  npm install --save-dev fake-indexeddb
+  ```
+
+  ```ts
+  // src/setupTests.ts
+  import 'fake-indexeddb/auto'
+  ```
+
+  or
+
+- Add mock cache provider with [vitest](https://vitest.dev/)
+
+  ```ts
+  // src/App.test.tsx
+  type SWRIdbCacheExports = typeof import('@piotr-cz/swr-idb-cache')
+
+  vi.mock('@piotr-cz/swr-idb-cache', async (importOriginal): Promise<SWRIdbCacheExports> => {
+    const mod = await importOriginal<SWRIdbCacheExports>()
+
+    return {
+      ...mod,
+      useCacheProvider: () => () => new Map(),
+    }
+  })
+  ```
