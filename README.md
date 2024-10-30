@@ -2,6 +2,12 @@
 
 Synchronize SWR Cache with [IndexedDB](https://developer.mozilla.org/en-US/docs/Glossary/IndexedDB) to get offline cache.
 
+Examples of use cases include situations where you want to provide a fallback solution for fetch requests
+right after your app launches (when offline or with an unstable internet connection):
+
+- Progressive Web Apps
+- [Capacitor](https://capacitorjs.com/) Apps
+
 Please note that the cache provider initialization process is asynchronous and until it's resolved, best practise is to render fallback component.
 
 > [!WARNING]
