@@ -35,7 +35,7 @@
   ],
   "scripts": {
     "build": "bunchee",
-    "npmpublish": "npm publish --access public",
+    "npmpublish": "npm publish",
     "prepare": "npm run build",
     "types:check": "tsc --noEmit",
     "test": "echo \"Error: no test specified\" && exit 1"
