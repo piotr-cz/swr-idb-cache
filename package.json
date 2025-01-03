@@ -20,7 +20,10 @@
   "files": [
     "dist"
   ],
-  "repository": "github:piotr-cz/swr-idb-cache",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/piotr-cz/swr-idb-cache.git"
+  },
   "author": "Piotr Konieczny <hello@piotr.cz> (https://www.piotr.cz)",
   "homepage": "https://github.com/piotr-cz/swr-idb-cache",
   "license": "MIT",
