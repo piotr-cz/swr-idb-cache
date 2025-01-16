@@ -259,6 +259,6 @@ Pass it in configuration as in the [recipe above](#implement-garbage-collector)
   })
   ```
 
-## Related packges
+## Related packages
 
 - [`@instructure/idb-cache`](https://github.com/instructure/idb-cache)
