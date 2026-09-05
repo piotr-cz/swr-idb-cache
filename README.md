@@ -247,13 +247,11 @@ Pass it in configuration as in the [recipe above](#implement-garbage-collector)
 
   ```ts
   // src/App.test.tsx
-  type SWRIdbCacheExports = typeof import('@piotr-cz/swr-idb-cache')
-
-  vi.mock('@piotr-cz/swr-idb-cache', async (importOriginal): Promise<SWRIdbCacheExports> => {
-    const mod = await importOriginal<SWRIdbCacheExports>()
+  vi.mock(import('@piotr-cz/swr-idb-cache'), async (importOriginal) => {
+    const originalModule = await importOriginal()
 
     return {
-      ...mod,
+      ...originalModule,
       useCacheProvider: () => () => new Map(),
     }
   })
