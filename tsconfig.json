@@ -15,8 +15,7 @@
     "rootDir": "./src",
     "strict": true,
     "target": "ES2018",
-    "noEmitOnError": true,
-    "downlevelIteration": true
+    "noEmitOnError": true
   },
   "include": ["src"],
   "exclude": ["dist"],
