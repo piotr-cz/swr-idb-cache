@@ -99,11 +99,11 @@ export default async function createCacheProvider<Data = any, Error = any>({
     },
 
     /**
-     * Documented, but missing method type
-     * @link https://swr.vercel.app/docs/advanced/cache#access-to-the-cache
+     * @deprecated Use SWR's unload() API: https://swr.vercel.app/docs/advanced/cache#clear-the-cache
+     *
      * @link https://github.com/vercel/swr/pull/1936
      */
-    // @ts-ignore
+    // @ts-expect-error: TS2353 deprecated method previously available in swr
     clear: (): void => {
       map.clear()
       db.clear(storeName)
