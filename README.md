@@ -234,10 +234,14 @@ Pass it in configuration as in the [recipe above](#implement-garbage-collector)
 
   or
 
-- Add mock cache provider with [vitest](https://vitest.dev/)
+- Use mock cache provider
+
+  example usage with [vitest](https://vitest.dev/):
 
   ```ts
   // src/App.test.tsx
+  import { vi } from 'vitest'
+
   vi.mock(import('@piotr-cz/swr-idb-cache'), async (importOriginal) => {
     const originalModule = await importOriginal()
 
