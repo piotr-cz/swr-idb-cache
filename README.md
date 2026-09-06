@@ -28,7 +28,7 @@ Read SWR Docs > [Cache](https://swr.vercel.app/docs/advanced/cache) if your are 
 - [SWR](https://swr.vercel.app/) ^2.0.0  
   *Note: For SWR 1.x use the 1.0.0-rc.2 version of this package*
 
-- Works with [React](https://reactjs.org/) ^16.11 and [Preact](https://preactjs.com/)
+- Works with [React](https://reactjs.org/) >= 16.11 and [Preact](https://preactjs.com/)
 
 ## Setup
 
