@@ -100,7 +100,7 @@ function App() {
 - `storeName`: IndexedDB Store name
 - `storageHandler` (optional): Custom Storage handler, see [IStorageHandler interface](./src/types.ts#L31)
 - `version` (optional): Schema version, defaults to `1`
-- `onError` (optional): Database error handler, defaults to noop function
+- `onError(reason: unknown)` (optional): Database error handler, defaults to noop function
 
 Note: When using `useCacheProvider`, changing options doesn't create new cache provider.
 
