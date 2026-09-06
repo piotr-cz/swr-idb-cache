@@ -55,7 +55,7 @@ To wait until provider is resolved, use bundled `useCacheProvider` hook:
 import { SWRConfig } from 'swr'
 import { useCacheProvider } from '@piotr-cz/swr-idb-cache'
 
-function App() {
+const App = () => {
   // Initialize
   const cacheProvider = useCacheProvider({
     dbName: 'my-app',
@@ -83,7 +83,7 @@ function App() {
 import createCacheProvider from '@piotr-cz/swr-idb-cache'
 import usePromise from 'react-use-promise'
 
-function App() {
+const App = () => {
   // Initialize
   const [ cacheProvider ] = usePromise(() => createCacheProvider({
     dbName: 'my-app',
@@ -122,7 +122,7 @@ See idb [Issue #229](https://github.com/jakearchibald/idb/issues/229)
 ```jsx
 import useSWR, { useSWRConfig } from 'swr'
 
-export default function Item() {
+const Item = () => {
   const { data, error } = useSWR('/api/data')
   const { cache } = useSWRConfig()
 
@@ -184,7 +184,7 @@ Pass it to configuration
 
 +import customStorageHandler from './custom-storage-handler.js'
 +
- function App() {
+ const App = () => {
    // Initialize
    const cacheProvider = useCacheProvider({
      dbName: 'my-app',
