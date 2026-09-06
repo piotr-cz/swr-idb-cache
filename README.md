@@ -23,7 +23,6 @@ Then it resolves into Cache Provider which should be passed to SWR.
 
 Read SWR Docs > [Cache](https://swr.vercel.app/docs/advanced/cache) if your are interested in more information about implementation details.
 
-
 ## Installation
 
 Using npm:
@@ -36,14 +35,13 @@ or Yarn:
 
 ```console
 yarn add @piotr-cz/swr-idb-cache
-
 ```
-
 
 ## Requirements
 
 - [SWR](https://swr.vercel.app/) ^2.0.0  
   *Note: For SWR 1.x use the 1.0.0-rc.2 version of this package*
+
 - Works with [React](https://reactjs.org/) ^16.11 and [Preact](https://preactjs.com/)
 
 ## Setup
@@ -94,9 +92,7 @@ function App() {
 
   // …
 }
-
 ```
-
 
 ## Configuration
 
@@ -110,7 +106,6 @@ Note: When using `useCacheProvider`, changing options doesn't create new cache p
 
 ## Known issues
 
-
 ### InvalidStateError
 
 ```
@@ -120,9 +115,7 @@ Failed to execute 'transaction' on 'IDBDatabase': The database connection is clo
 
 See idb [Issue #229](https://github.com/jakearchibald/idb/issues/229)
 
-
 ## Recipes
-
 
 ### Delete cache entry
 
@@ -156,7 +149,6 @@ export default function Item() {
   )
 }
 ```
-
 
 ### Implement Garbage Collector
 
@@ -202,7 +194,6 @@ Pass it to configuration
 
    // …
 ```
-
 
 ### Ignore API endpoints from cache persistence
 
