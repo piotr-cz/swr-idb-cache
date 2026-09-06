@@ -23,20 +23,6 @@ Then it resolves into Cache Provider which should be passed to SWR.
 
 Read SWR Docs > [Cache](https://swr.vercel.app/docs/advanced/cache) if your are interested in more information about implementation details.
 
-## Installation
-
-Using npm:
-
-```console
-npm install --save @piotr-cz/swr-idb-cache
-```
-
-or Yarn:
-
-```console
-yarn add @piotr-cz/swr-idb-cache
-```
-
 ## Requirements
 
 - [SWR](https://swr.vercel.app/) ^2.0.0  
@@ -221,11 +207,7 @@ Pass it in configuration as in the [recipe above](#implement-garbage-collector)
 
 ### Mocking package in tests
 
-- Use mock IndexedDB
-
-  ```shell
-  npm install --save-dev fake-indexeddb
-  ```
+- Use mock IndexedDB, such as [fake-indexeddb](https://github.com/dumbmatter/fakeIndexedDB)
 
   ```ts
   // src/setupTests.ts
