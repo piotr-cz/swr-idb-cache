@@ -25,7 +25,7 @@ export type CacheProvider<Data = any> = (globalCache: Readonly<SWRCache<Data>>) 
 /**
  * Use cache provider interface
  */
-export type UseCacheProvider<Data = any> = (props: Config) => CacheProvider<Data> | undefined
+export type UseCacheProvider<Data = any> = (config: Config) => CacheProvider<Data> | undefined
 
 /**
  * Storage handler for Transferrable object
