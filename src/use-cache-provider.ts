@@ -6,8 +6,8 @@ import createCacheProvider from './cache-provider'
 /**
  * Cache provider hook
  */
-export default function useCacheProvider<Data = any, Error = any>(props: Config): CacheProvider | undefined {
-  const [ cacheProvider, setCacheProvider ] = useState<CacheProvider>()
+export default function useCacheProvider<Data = any, Error = any>(props: Config): CacheProvider<Data> | undefined {
+  const [ cacheProvider, setCacheProvider ] = useState<CacheProvider<Data>>()
 
   useEffect(() => {
     // False on mount or on dependency change
