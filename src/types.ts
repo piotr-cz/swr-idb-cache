@@ -50,7 +50,7 @@ export interface StorageHandler<Data = any, StoreObject = any> {
 
   /**
    * Value replacer on db put
-   * Return undefined ignore item persistence
+   * Return undefined to ignore item persistence
    */
   replace: (key: string, value: Data) => StoreObject | undefined,
 

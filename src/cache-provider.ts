@@ -74,6 +74,7 @@ export default async function createCacheProvider<Data = any, Error = any>({
     set: (key: Key, value: State): void => {
       map.set(key, value)
 
+      // Ignore when value is SWR fetch info (no data)
       if (isFetchInfo(value)) {
         return
       }
@@ -111,7 +112,9 @@ export default async function createCacheProvider<Data = any, Error = any>({
   })
 
   /**
-   * Do not store as non-native errors are not serializable, other properties are optional
+   * Test against error (non-native errors are not serializable)
+   * Test against progress indicators
+   *
    * @link https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types
    */
   function isFetchInfo(state: State): boolean {
