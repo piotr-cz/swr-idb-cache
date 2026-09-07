@@ -5,7 +5,7 @@ import { openDB } from 'idb'
 import type { CacheProvider, Config } from './types'
 import simpleStorageHandler from './storage-handler/simple'
 
-// Unlinke what SWR types suggest, key is always a serialized string
+// Unlike what SWR types suggest, key is always a serialized string
 type Key = string
 
 /**
