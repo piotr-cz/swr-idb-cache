@@ -1,0 +1,5 @@
+{
+  "js/ts.format.semicolons": "remove",
+  "js/ts.preferences.importModuleSpecifierEnding": "minimal",
+  "js/ts.preferences.quoteStyle": "single"
+}
