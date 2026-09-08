@@ -15,6 +15,7 @@ export default function useCacheProvider<Data = any, Error = any>(config: Config
 
     createCacheProvider<Data, Error>(config)
       .then(cp =>
+        // Wrapped because setting state to a function
         isSetup && setCacheProvider(() => cp)
       )
 
