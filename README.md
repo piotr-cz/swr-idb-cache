@@ -108,8 +108,8 @@ See idb [Issue #229](https://github.com/jakearchibald/idb/issues/229)
 ```jsx
 import useSWR, { useSWRConfig } from 'swr'
 
-const Item = () => {
-  const { data, error } = useSWR('/api/data')
+const Item = ({ id }) => {
+  const { data: item, error } = useSWR(`/api/items/${id}`)
   const { cache } = useSWRConfig()
 
   const handleRemove = () => {
@@ -117,14 +117,14 @@ const Item = () => {
     // …
 
     // Remove from cache with key used in useSWR hook
-    cache.delete('/api/data')
+    cache.delete(`/api/items/${id}`)
   }
 
   return (
     <main>
       {/** Show item */}
-      {data &&
-        <h1>{data.label}</h1>
+      {item &&
+        <h1>{item.label}</h1>
       }
 
       {/** Remove item */}
@@ -191,7 +191,7 @@ import { timestampStorageHandler } from '@piotr-cz/swr-idb-cache'
 
 const blacklistStorageHandler = {
   ...timestampStorageHandler,
-  // Ignore entries fetched from API endpoints starting with /api/device
+  // Ignore entries fetched from API endpoints starting with /api/device/
   replace: (key, value) =>
     !key.startsWith('/api/device/')
       // Wrapped value
